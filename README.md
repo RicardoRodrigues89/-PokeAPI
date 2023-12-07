@@ -3,8 +3,7 @@ Trabalho
 Desenvolvimento de Interface Frontend com PokeAPI
 Objetivo:
 ● Desenvolver uma aplicação frontend interativa que utilize a PokeAPI para exibir
-informações sobre Pokémons. O projeto deve ser construído utilizando HTML, CSS
-e Javascript, com a opção de incorporar Bootstrap e outras bibliotecas conforme
+informações sobre TODOS Pokémons. O projeto deve ser construído utilizando HTML, CSS, Javascript, Bootstrap e outras bibliotecas conforme
 necessário.
 Requisitos:
 1. Página principal:
@@ -29,13 +28,8 @@ PokeAPI e obter dados dinâmicos.
 7. Melhorias Opcionais:
 ● Implementar funcionalidades adicionais como ordenação da lista, filtros, por
 tipo de Pokémon, ou qualquer outra melhoria que considere relevante.
-8. Criação de Wireframes (Opcional):
-● Criar wireframes de alta fidelidade para expressar ideias de forma visual e
-facilitar na codificação da aplicação.
-● O Wireframe, se criado, deve ser anexado ao projeto ou por link no readme
-ou arquivos em uma pasta chamada “docs”
+
 Observações:
-● O Trabalho será em dupla, porém haverá um trio (escolhido pelo professor).
 ● O uso de Bootstrap e outras bibliotecas é permitido para facilitar o desenvolvimento
 e melhorar a experiência do usuário.
 ● O código deve ser organizado e bem comentado
