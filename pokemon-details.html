@@ -56,7 +56,75 @@
 
 <!--Bootstrap JS e dependências-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/"
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>document.addEventListener("DOMContentLoaded", function() {// Obter  parâmetr 'url' da URL cnst urlParams = new URLSEARCHParams(window.location.search);
+const pkemonUrl = urlParams.get("url"); 
+
+//Função para mstrar detalhes do Pokémon
+fetch(pokemonUrl)
+.then((response)=> respnse.jsn())
+.then((pokemon)=>{
+const pokemonDetailsContainer = 
+document.getElementByld("pokemon-details");
+
+pokemonDetailsContainer.innerHTML = 
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" class="img-fluid" alt="${pokemon.name}">
+<div class="pokemon-info">
+    <h5 class="card-title">Detalhes do Pokémon - ${pokemon.name}</h5>
+    <p><strong>Número:</strong> ${pokemon.types.map((type)=>type.type.name) 
+    .join(",")}</p>
+    <p><strong>Habilidades:</strong> ${pokemon.abilities
+    .map((ability)=>ability.ability.name)
+.join(",")}</p>
+<p><strong>Estatísticas:</strong></p>
+<ul>
+    ${pkemon.stats
+    .map(
+        (stat)=>
+        `<li><strong>${stat.stat.name}:</strong>${stat.base_stat}</li>`
+    )
+.join("")}
+</ul>
+</div>
+`;
+});
+});
+
+//Função para pesquisar Pokémon
+function searchPokemon(){
+    cont searchInput=document
+    .getElementByld("searchInput")
+    .value.toLowerCase();
+
+    //Obtem todos os cards de Pokémon
+    const pokemonCards=dcument.querySelectorAll(".card");
+
+    //Percorre os cards para cutar/mostrar com base na pesquisa
+
+    pokemonCards.forEach((card)=>{
+        const pokemonName = card
+        .querySelector(".card-title")
+        .textContent.toLowerCase();
+        const pokemonNumber = card
+        .querySelector(".card-title")
+        .textContent.split("-")[0]
+        .slice(1);
+        
+        if(
+            pokemonName.includes(searchInput)||
+            pokemonNumber.includes(searchInput)
+        ){
+            card.style.display="block";
+        }else{
+            card.style.display="nome";
+        }
+
+        });
+        
+    }
+</script>
 
 
 
