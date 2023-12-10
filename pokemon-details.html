@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Detalhes do Pokémon</title>
-    
+
     <!--Bootstrap CSS-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 
@@ -19,75 +19,69 @@
             <img src="./imagens/pokeball.png" alt="Pokeball" />
             <img src="./imagens/download-removebg-preview.png" alt="Pokédex Logo" class="logo" />
         </a>
-    
 
-    <!--Barra de Pesquisa-->
-    <div class="ml-auto my-2 my-lg-0 search-bar">
-        <input class="form-control mr-sm-2 search-input" type="search" placeholder="Pesquisar Pokémon..."
-            aria-label="Pesquisar" id="searchInput">
-        <button class="btn btn-primary my-2 my-sm-0 search-button" onclick="searchPokemon()">Pesquisar</button>
+
+        <!--Barra de Pesquisa-->
+        <div class="ml-auto my-2 my-lg-0 search-bar">
+            <input class="form-control mr-sm-2 search-input" type="search" placeholder="Pesquisar Pokémon..."
+                aria-label="Pesquisar" id="searchInput">
+            <button class="btn btn-primary my-2 my-sm-0 search-button" onclick="searchPokemon()">Pesquisar</button>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!--Adicione aqui os links do menu, se necessário-->
+        </div>
+    </nav>
+
+
+    <!--Detalhes do Pokémon-->
+
+    <div class="container mt-5">
+
+        <div id="pokemon-detais" class="text-center">
+
+        </div>
     </div>
 
-    <button class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarNav"
-    aria-controls="navbarNav"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-    >
-    <span class="navbar-toggler-icon"></span>
-    </button>
+    <!--Bootstrap JS e dependências-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <!--Adicione aqui os links do menu, se necessário-->
-    </div>
-</nav>
+    <script>document.addEventListener("DOMContentLoaded", function () {// Obter  parâmetr 'url' da URL cnst urlParams = new URLSEARCHParams(window.location.search);
+            const pokemonUrl = urlParams.get("url");
 
+            //Função para mostrar detalhes do Pokémon
+            fetch(pokemonUrl)
+                .then((response) => response.json())
+                .then((pokemon) => {
+                    const pokemonDetailsContainer =
+                        document.getElementByld("pokemon-details");
 
-<!--Detalhes do Pokémon-->
-
-<div class="container mt-5">
-
-    <div id="pokemon-detais" class="text-center">
-
-    </div>
-</div>
-
-<!--Bootstrap JS e dependências-->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-<script>document.addEventListener("DOMContentLoaded", function() {// Obter  parâmetr 'url' da URL cnst urlParams = new URLSEARCHParams(window.location.search);
-const pkemonUrl = urlParams.get("url"); 
-
-//Função para mstrar detalhes do Pokémon
-fetch(pokemonUrl)
-.then((response)=> respnse.jsn())
-.then((pokemon)=>{
-const pokemonDetailsContainer = 
-document.getElementByld("pokemon-details");
-
-pokemonDetailsContainer.innerHTML = 
-<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" class="img-fluid" alt="${pokemon.name}">
-<div class="pokemon-info">
-    <h5 class="card-title">Detalhes do Pokémon - ${pokemon.name}</h5>
-    <p><strong>Número:</strong> ${pokemon.types.map((type)=>type.type.name) 
-    .join(",")}</p>
-    <p><strong>Habilidades:</strong> ${pokemon.abilities
-    .map((ability)=>ability.ability.name)
-.join(",")}</p>
-<p><strong>Estatísticas:</strong></p>
-<ul>
-    ${pkemon.stats
-    .map(
-        (stat)=>
-        `<li><strong>${stat.stat.name}:</strong>${stat.base_stat}</li>`
-    )
-.join("")}
-</ul>
-</div>
+                    pokemonDetailsContainer.innerHTML =
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" class="img-fluid" alt="${pokemon.name}">
+                            <div class="pokemon-info">
+                                <h5 class="card-title">Detalhes do Pokémon - ${pokemon.name}</h5>
+                                <p><strong>Número:</strong> ${pokemon.types.map((type) => type.type.name)
+                                    .join(",")}</p>
+                                <p><strong>Habilidades:</strong> ${pokemon.abilities
+                                    .map((ability) => ability.ability.name)
+                                    .join(",")}</p>
+                                <p><strong>Estatísticas:</strong></p>
+                                <ul>
+                                    ${pokemon.stats
+                                        .map(
+                                            (stat) =>
+                                                `<li><strong>${stat.stat.name}:</strong>${stat.base_stat}</li>`
+                                        )
+                                        .join("")}
+                                </ul>
+                            </div>
 `;
 });
 });
@@ -124,7 +118,7 @@ function searchPokemon(){
         });
         
     }
-</script>
+    </script>
 
 
 
