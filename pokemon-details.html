@@ -53,7 +53,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <script>document.addEventListener("DOMContentLoaded", function () {// Obter  parâmetr 'url' da URL cnst urlParams = new URLSEARCHParams(window.location.search);
+    <script>document.addEventListener("DOMContentLoaded", function () {// Obter  parâmetro 'url' da URL const urlParams = new URLSEARCHParams(window.location.search);
             const pokemonUrl = urlParams.get("url");
 
             //Função para mostrar detalhes do Pokémon
@@ -88,16 +88,14 @@
 
 //Função para pesquisar Pokémon
 function searchPokemon(){
-    cont searchInput=document
-    .getElementByld("searchInput")
-    .value.toLowerCase();
+    const searchInput = document.getElementByld("searchInput").value.toLowerCase();
 
     //Obtem todos os cards de Pokémon
     const pokemonCards=dcument.querySelectorAll(".card");
 
     //Percorre os cards para cutar/mostrar com base na pesquisa
 
-    pokemonCards.forEach((card)=>{
+    pokemonCards.forEach((card) => {
         const pokemonName = card
         .querySelector(".card-title")
         .textContent.toLowerCase();
