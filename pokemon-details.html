@@ -1,118 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>Detalhes do Pokémon</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <!-- Seu CSS personalizado pode ser adicionado aqui -->
     <style>
-       
-    </style>
-</head>
-<body>
+      /* Adicione estilos personalizados aqui */
+      .search-bar {
+        display: flex;
+        align-items: center;
+      }
+      .navbar-brand img {
+        width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
+        height: 80px;
+        margin-right: 10px;
+      }
 
+      .navbar-brand img.logo {
+        width: 100px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
+        height: auto;
+      }
+
+      #pokemon-details {
+        display: flex; /* Adiciona o modelo de layout flexível para alinhar os elementos em linha */
+        justify-content: space-between; /* Adiciona espaçamento entre os elementos para preencher a largura disponível */
+        align-items: center; /* Centraliza verticalmente os elementos */
+        max-width: 800px; /* Limita a largura máxima para manter a responsividade */
+        margin: 0 auto; /* Centraliza o conteúdo na página */
+        margin-top: 20px; /* Adiciona margem superior para separar da barra de navegação */
+      }
+
+      #pokemon-details img {
+        max-width: 60%; /* Ajuste a largura máxima da imagem do Pokémon para 60% */
+        height: auto; /* Mantém a proporção da imagem */
+      }
+      #pokemon-details .pokemon-info {
+        max-width: 50%; /* Ajuste a largura máxima das informações para 50% */
+      }
+
+      #pokemon-details ul {
+        list-style: none; /* Remove os marcadores de lista padrão */
+        padding: 0; /* Remove o preenchimento padrão da lista */
+      }
+
+      #pokemon-details ul li {
+        margin-bottom: 10px; /* Adiciona espaço entre os itens da lista */
+      }
+    </style>
+  </head>
+  <body>
     <!-- Barra de Navegação -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="./index.html">
-            <img src="./imagens/pokeball.png" alt="Pokeball">
-            <img src="./imagens/download-removebg-preview.png" alt="Pokédex Logo" class="logo">
-        </a>
-        <div class="ml-auto my-2 my-lg-0">
-            <div class="search-bar">
-                <input class="form-control mr-sm-2 search-input" type="search" placeholder="Pesquisar Pokémon..." aria-label="Pesquisar" id="searchInput">
-                <button class="btn btn-primary my-2 my-sm-0 search-button" onclick="searchPokemon()">Pesquisar</button>
-            </div>
+      <a class="navbar-brand" href="./index.html">
+        <img src="./imagens/pokeball.png.png" alt="Pokeball" />
+        <img
+          src="./imagens/download-removebg-preview.png.png"
+          alt="Pokédex Logo"
+          class="logo"
+        />
+        <img
+          src="./imagens/f01b52cb89c607a7358d54b112ffe93e-removebg-preview.png"
+        />
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Adicione aqui os links do menu, se necessário -->
+      </div>
+      <div class="ml-auto my-2 my-lg-0">
+        <div class="search-bar">
+          <input
+            class="form-control mr-sm-2 search-input"
+            type="search"
+            placeholder="Pesquisar Pokémon..."
+            aria-label="Pesquisar"
+            id="searchInput"
+          />
+          <button
+            class="btn btn-primary my-2 my-sm-0 search-button"
+            onclick="searchPokemon()"
+          >
+            Pesquisar
+          </button>
         </div>
+      </div>
     </nav>
 
     <div class="container mt-5">
-        <!-- Detalhes do Pokémon -->
-        <div id="pokemon-details" class="text-center">
-            <!-- As informações do Pokémon serão exibidas aqui -->
-        </div>
+      <!-- Detalhes do Pokémon -->
+      <div id="pokemon-details" class="text-center">
+        <!-- As informações do Pokémon serão exibidas aqui -->
+      </div>
     </div>
 
     <!-- Bootstrap JS e dependências -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Obter o parâmetro 'url' da URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const pokemonUrl = urlParams.get('url');
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Obter o parâmetro 'url' da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const pokemonUrl = urlParams.get("url");
 
-    // Função para mostrar detalhes do Pokémon
-    fetch(pokemonUrl)
-      .then(response => response.json())
-      .then(pokemon => {
-        const pokemonDetailsContainer = document.getElementById('pokemon-details');
+        // Função para mostrar detalhes do Pokémon
+        fetch(pokemonUrl)
+          .then((response) => response.json())
+          .then((pokemon) => {
+            const pokemonDetailsContainer =
+              document.getElementById("pokemon-details");
 
-        // Obtém as fraquezas do Pokémon
-        const weaknessesPromises = pokemon.types.map(type => {
-          const typeUrl = type.type.url;
-          return fetch(typeUrl)
-            .then(response => response.json())
-            .then(typeDetails => typeDetails.damage_relations.double_damage_from.map(weakness => weakness.name))
-            .catch(error => {
-              console.error('Erro ao obter fraquezas:', error);
-              return [];
+            // Obtém as fraquezas do Pokémon
+            const weaknessesPromises = pokemon.types.map((type) => {
+              const typeUrl = type.type.url;
+              return fetch(typeUrl)
+                .then((response) => response.json())
+                .then((typeDetails) =>
+                  typeDetails.damage_relations.double_damage_from.map(
+                    (weakness) => weakness.name
+                  )
+                )
+                .catch((error) => {
+                  console.error("Erro ao obter fraquezas:", error);
+                  return [];
+                });
             });
-        });
 
-        // Após todas as requisições estarem completas, exibe os detalhes
-        Promise.all(weaknessesPromises)
-          .then(allWeaknesses => {
-            // Flatten the array of weaknesses
-            const uniqueWeaknesses = [...new Set(allWeaknesses.flat())];
+            // Após todas as requisições estarem completas, exibe os detalhes
+            Promise.all(weaknessesPromises)
+              .then((allWeaknesses) => {
+                // Flatten the array of weaknesses
+                const uniqueWeaknesses = [...new Set(allWeaknesses.flat())];
 
-            const weaknessesText = uniqueWeaknesses.length > 0 ? `<p><strong>Fraquezas:</strong> ${uniqueWeaknesses.join(', ')}</p>` : '';
+                const weaknessesText =
+                  uniqueWeaknesses.length > 0
+                    ? `<p><strong>Fraquezas:</strong> ${uniqueWeaknesses.join(
+                        ", "
+                      )}</p>`
+                    : "";
 
-            pokemonDetailsContainer.innerHTML = `
-              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" class="img-fluid" alt="${pokemon.name}">
+                pokemonDetailsContainer.innerHTML = `
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+                pokemon.id
+              }.png" class="img-fluid" alt="${pokemon.name}">
               <div class="pokemon-info">
-                  <h5 class="card-title">Detalhes do Pokémon - ${pokemon.name}</h5>
+                  <h5 class="card-title">Detalhes do Pokémon - ${
+                    pokemon.name
+                  }</h5>
                   <p><strong>Número:</strong> ${pokemon.id}</p>
-                  <p><strong>Tipo:</strong> ${pokemon.types.map(type => type.type.name).join(', ')}</p>
-                  <p><strong>Habilidades:</strong> ${pokemon.abilities.map(ability => ability.ability.name).join(', ')}</p>
+                  <p><strong>Tipo:</strong> ${pokemon.types
+                    .map((type) => type.type.name)
+                    .join(", ")}</p>
+                  <p><strong>Habilidades:</strong> ${pokemon.abilities
+                    .map((ability) => ability.ability.name)
+                    .join(", ")}</p>
                   <p><strong>Estatísticas:</strong></p>
                   <ul>
-                      ${pokemon.stats.map(stat => `<li><strong>${stat.stat.name}:</strong> ${stat.base_stat}</li>`).join('')}
+                      ${pokemon.stats
+                        .map(
+                          (stat) =>
+                            `<li><strong>${stat.stat.name}:</strong> ${stat.base_stat}</li>`
+                        )
+                        .join("")}
                   </ul>
                   ${weaknessesText}
               </div>
             `;
+              })
+              .catch((error) => {
+                console.error("Erro ao obter fraquezas:", error);
+              });
           })
-          .catch(error => {
-            console.error('Erro ao obter fraquezas:', error);
+          .catch((error) => {
+            console.error("Erro ao obter detalhes do Pokémon:", error);
           });
-      })
-      .catch(error => {
-        console.error('Erro ao obter detalhes do Pokémon:', error);
       });
-  });
 
-  // Função para pesquisar Pokémon
-  function searchPokemon() {
-    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+      // Função para pesquisar Pokémon
+      function searchPokemon() {
+        const searchInput = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
 
-    // Obtem todos os cards de Pokémon
-    const pokemonCards = document.querySelectorAll('.card');
+        // Obtem todos os cards de Pokémon
+        const pokemonCards = document.querySelectorAll(".card");
 
-    // Percorre os cards para ocultar/mostrar com base na pesquisa
-    pokemonCards.forEach(card => {
-      const pokemonName = card.querySelector('.card-title').textContent.toLowerCase();
-      const pokemonNumber = card.querySelector('.card-title').textContent.split(' - ')[0].slice(1);
+        // Percorre os cards para ocultar/mostrar com base na pesquisa
+        pokemonCards.forEach((card) => {
+          const pokemonName = card
+            .querySelector(".card-title")
+            .textContent.toLowerCase();
+          const pokemonNumber = card
+            .querySelector(".card-title")
+            .textContent.split(" - ")[0]
+            .slice(1);
 
-      if (pokemonName.includes(searchInput) || pokemonNumber.includes(searchInput)) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
+          if (
+            pokemonName.includes(searchInput) ||
+            pokemonNumber.includes(searchInput)
+          ) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
       }
-    });
-  }
-</script>
-
-</body>
+    </script>
+  </body>
 </html>

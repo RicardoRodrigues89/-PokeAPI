@@ -1,120 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>Pokédex</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <!-- Seu CSS personalizado pode ser adicionado aqui -->
     <style>
-        /* Adicione estilos personalizados aqui */
-        .search-bar {
-            display: flex;
-            align-items: center;
-            margin-left: auto; /* Mover para o canto direito */
-        }
+      /* Adicione estilos personalizados aqui */
+      .search-bar {
+        display: flex;
+        align-items: center;
+        margin-left: auto; /* Mover para o canto direito */
+      }
 
-        .search-input {
-            flex-grow: 1; /* Ajusta a largura da barra de pesquisa para ocupar o espaço disponível */
-        }
+      .search-input {
+        flex-grow: 1; /* Ajusta a largura da barra de pesquisa para ocupar o espaço disponível */
+      }
 
-        .navbar-brand img {
-            width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
-            height: 80px;
-            margin-right: 10px;
-        }
+      .navbar-brand img {
+        width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
+        height: 80px;
+        margin-right: 10px;
+      }
 
-        .navbar-brand img.logo {
-            width: 100px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
-            height: auto;
-        }
+      .navbar-brand img.logo {
+        width: 100px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
+        height: auto;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Barra de Navegação -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="./imagens/pokeball.png" alt="Pokeball" />
-            <img src="./imagens/download-removebg-preview.png" alt="Pokédex Logo" class="logo" />
-        </a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+      <a class="navbar-brand" href="#">
+        <img src="./imagens/pokeball.png.png" alt="Pokeball" />
+        <img
+          src="./imagens/download-removebg-preview.png.png"
+          alt="Pokédex Logo"
+          class="logo"
+        />
+        <img
+          src="./imagens/f01b52cb89c607a7358d54b112ffe93e-removebg-preview.png"
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Adicione aqui os links do menu, se necessário -->
+      </div>
+      <!-- Barra de Pesquisa -->
+      <div class="ml-auto my-2 my-lg-0 search-bar">
+        <input
+          class="form-control mr-sm-2 search-input"
+          type="search"
+          placeholder="Pesquisar Pokémon..."
+          aria-label="Pesquisar"
+          id="searchInput"
+        />
         <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          class="btn btn-primary my-2 my-sm-0 search-button"
+          onclick="searchPokemon()"
         >
-          <span class="navbar-toggler-icon"></span>
+          Pesquisar
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <!-- Adicione aqui os links do menu, se necessário -->
-        </div>
-        <!-- Barra de Pesquisa -->
-        <div class="ml-auto my-2 my-lg-0 search-bar">
-            <input class="form-control mr-sm-2 search-input" type="search" placeholder="Pesquisar Pokémon..." aria-label="Pesquisar" id="searchInput">
-            <button class="btn btn-primary my-2 my-sm-0 search-button" onclick="searchPokemon()">Pesquisar</button>
-        </div>
+      </div>
     </nav>
 
     <div class="container mt-5">
-        <!-- Lista de Pokémons -->
-        <div class="row" id="pokemon-list">
-            <!-- A lista de Pokémons será exibida aqui -->
-        </div>
+      <!-- Lista de Pokémons -->
+      <div class="row" id="pokemon-list">
+        <!-- A lista de Pokémons será exibida aqui -->
+      </div>
 
-        <!-- Detalhes do Pokémon -->
-        <div
-            class="modal fade"
-            id="pokemonDetailsModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="pokemonDetailsModalLabel"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="pokemonDetailsModalLabel">
-                            Detalhes do Pokémon
-                        </h5>
-                        <button
-                            type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                        >
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="pokemon-details">
-                        <!-- Os detalhes do Pokémon serão exibidos aqui -->
-                    </div>
-                </div>
+      <!-- Detalhes do Pokémon -->
+      <div
+        class="modal fade"
+        id="pokemonDetailsModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="pokemonDetailsModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="pokemonDetailsModalLabel">
+                Detalhes do Pokémon
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body" id="pokemon-details">
+              <!-- Os detalhes do Pokémon serão exibidos aqui -->
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Bootstrap JS e dependências -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Fetch para obter a lista de Pokémons
-            fetch("https://pokeapi.co/api/v2/pokemon?limit=1080")
-                .then((response) => response.json())
-                .then((data) => {
-                    const pokemonList = document.getElementById("pokemon-list");
+      document.addEventListener("DOMContentLoaded", function () {
+        // Fetch para obter a lista de Pokémons
+        fetch("https://pokeapi.co/api/v2/pokemon?limit=1080")
+          .then((response) => response.json())
+          .then((data) => {
+            const pokemonList = document.getElementById("pokemon-list");
 
-                    data.results.forEach((pokemon) => {
-                        const card = document.createElement("div");
-                        card.className = "col-md-3 mb-4";
+            data.results.forEach((pokemon) => {
+              const card = document.createElement("div");
+              card.className = "col-md-3 mb-4";
 
-                        const pokemonNumber = pokemon.url.split("/")[6]; // Obtém o número do Pokémon a partir da URL
-                        const formattedNumber = String(pokemonNumber).padStart(3, "0"); // Formata para ter três dígitos (preenchendo com zeros à esquerda, se necessário)
+              const pokemonNumber = pokemon.url.split("/")[6]; // Obtém o número do Pokémon a partir da URL
+              const formattedNumber = String(pokemonNumber).padStart(3, "0"); // Formata para ter três dígitos (preenchendo com zeros à esquerda, se necessário)
 
-                        card.innerHTML = `
+              card.innerHTML = `
                             <div class="card">
                                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNumber}.png" class="card-img-top" alt="${pokemon.name}">
                                 <div class="card-body">
@@ -124,54 +148,53 @@
                             </div>
                         `;
 
-                        pokemonList.appendChild(card);
-                    });
+              pokemonList.appendChild(card);
+            });
 
-                    // Adicionar evento de clique para exibir detalhes do Pokémon
-                    document.querySelectorAll(".btn-primary").forEach((btn) => {
-                        btn.addEventListener("click", function () {
-                            const pokemonUrl = this.getAttribute("href");
-                            showPokemonDetails(pokemonUrl);
-                        });
-                    });
-                });
-        });
+            // Adicionar evento de clique para exibir detalhes do Pokémon
+            document.querySelectorAll(".btn-primary").forEach((btn) => {
+              btn.addEventListener("click", function () {
+                const pokemonUrl = this.getAttribute("href");
+                showPokemonDetails(pokemonUrl);
+              });
+            });
+          });
+      });
 
-        // Função para mostrar detalhes do Pokémon
-        function showPokemonDetails(url) {
-            fetch(url)
-                .then((response) => response.json())
-                .then((pokemon) => {
-                    const pokemonDetailsModal = document.getElementById(
-                        "pokemonDetailsModalLabel"
-                    );
-                    const pokemonDetails = document.getElementById("pokemon-details");
+      // Função para mostrar detalhes do Pokémon
+      function showPokemonDetails(url) {
+        fetch(url)
+          .then((response) => response.json())
+          .then((pokemon) => {
+            const pokemonDetailsModal = document.getElementById(
+              "pokemonDetailsModalLabel"
+            );
+            const pokemonDetails = document.getElementById("pokemon-details");
 
-                    pokemonDetailsModal.textContent = `Detalhes do Pokémon - ${pokemon.name}`;
-                    pokemonDetails.innerHTML = `
+            pokemonDetailsModal.textContent = `Detalhes do Pokémon - ${pokemon.name}`;
+            pokemonDetails.innerHTML = `
                         <p><strong>Número:</strong> ${pokemon.id}</p>
                         <p><strong>Tipo:</strong> ${pokemon.types
-                            .map((type) => type.type.name)
-                            .join(", ")}</p>
+                          .map((type) => type.type.name)
+                          .join(", ")}</p>
                         <p><strong>Habilidades:</strong> ${pokemon.abilities
-                            .map((ability) => ability.ability.name)
-                            .join(", ")}</p>
+                          .map((ability) => ability.ability.name)
+                          .join(", ")}</p>
                         <p><strong>Estatísticas:</strong></p>
                         <ul>
                             ${pokemon.stats
-                                .map(
-                                    (stat) =>
-                                        `<li><strong>${stat.stat.name}:</strong> ${stat.base_stat}</li>`
-                                )
-                                .join("")}
+                              .map(
+                                (stat) =>
+                                  `<li><strong>${stat.stat.name}:</strong> ${stat.base_stat}</li>`
+                              )
+                              .join("")}
                         </ul>
                     `;
 
-                    // Exibe o modal de detalhes
-                    $('#pokemonDetailsModal').modal('show');
-                });
-        }
+            // Exibe o modal de detalhes
+            $("#pokemonDetailsModal").modal("show");
+          });
+      }
     </script>
-</body>
+  </body>
 </html>
-
