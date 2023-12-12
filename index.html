@@ -35,6 +35,11 @@
         width: 100px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
         height: auto;
       }
+
+      .grass {
+  background-color: #DEFDE0;
+}
+    
     </style>
   </head>
   <body>
@@ -131,15 +136,16 @@
           .then((data) => {
             const pokemonList = document.getElementById("pokemon-list");
 
-            data.results.forEach((pokemon) => {
+            data.results.forEach(async (pokemon) => {
               const card = document.createElement("div");
               card.className = "col-md-3 mb-4";
 
               const pokemonNumber = pokemon.url.split("/")[6]; // Obtém o número do Pokémon a partir da URL
               const formattedNumber = String(pokemonNumber).padStart(3, "0"); // Formata para ter três dígitos (preenchendo com zeros à esquerda, se necessário)
+              const pokemonType = await fetch(pokemon.url).then(response => response.json()).then(pokemon => pokemon.types[0].type.name);
 
               card.innerHTML = `
-                            <div class="card">
+                            <div class="card ${pokemonType}">
                                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNumber}.png" class="card-img-top" alt="${pokemon.name}">
                                 <div class="card-body">
                                     <h5 class="card-title">#${formattedNumber} - ${pokemon.name}</h5>
