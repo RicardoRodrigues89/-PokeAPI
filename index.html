@@ -7,106 +7,114 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>Pokédex</title>
-    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="styles.css" />
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <!-- Seu CSS personalizado pode ser adicionado aqui -->
     <style>
+      /* ... Seu CSS existente ... */
+
       /* Adicione estilos personalizados aqui */
-      .search-bar {
-        display: flex;
-        align-items: center;
-        margin-left: auto; /* Mover para o canto direito */
+      .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 1); /* Sombra nos cards */
+        transition: box-shadow 0.3s ease; /* Transição suave para a sombra */
+
+        /* Adicione os estilos específicos para o efeito hover */
+      }
+      .card-background {
+        background-image: url("./imagens/pp_504x498-pad_600x600_f8f8f8.u3-removebg-preview.png");
+        background-position: center;
+        border-radius: 2%;
       }
 
-      .search-input {
-        flex-grow: 1; /* Ajusta a largura da barra de pesquisa para ocupar o espaço disponível */
+      .card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 1); /* Aumenta a sombra ao passar o mouse */
+        transform: scale(
+          1.05
+        ); /* Aumenta ligeiramente o tamanho ao passar o mouse */
       }
 
-      .navbar-brand img {
-        width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
-        height: 80px;
-        margin-right: 10px;
-      }
+      /* ... Seu CSS existente ... */
 
-      .navbar-brand img.logo {
-        width: 100px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
-        height: auto;
-      }
-
-      
       .steel {
-  background-color: #f4f4f4;
-}
+        background-color: #b8b8d0;
+      }
 
       .grass {
-  background-color: #DEFDE0;
-}
+        background-color: #defde0;
+      }
 
       .fire {
-  background-color: #FDDFDF;
-}
+        background-color: #f05030;
+      }
 
       .grass {
-  background-color: #DEFDE0;
-}
+        background-color: #78c850;
+      }
 
       .electric {
-  background-color: #FCF7DE;
-}
+        background-color: #f8d030;
+      }
 
-      .water, .ice {
-  background-color: #DEF3FD;
-}
+      .water {
+        background-color: #6890f0;
+      }
 
-       .ground {
-  background-color: #f4e7da;
-}
+      .ice {
+        background-color: #98d8d8;
+      }
+
+      .ground {
+        background-color: #e0c068;
+      }
 
       .rock {
-  background-color: #d5d5d4;
-}
+        background-color: #b8a038;
+      }
 
       .fairy {
-  background-color: #fceaff;
-}
+        background-color: #fceaff;
+      }
 
-       .poison {
-  background-color: #c4add6;
-}
+      .poison {
+        background-color: #a040a0;
+      }
 
-       .bug {
-  background-color: #f8d5a3;
-}
+      .bug {
+        background-color: #68a090;
+      }
 
       .dragon {
-  background-color: #97b3e6;
-}
+        background-color: #7038f8;
+      }
 
       .psychic {
-  background-color: #eaeda1;
-}
+        background-color: #f85888;
+      }
 
-       .flying {
-  background-color: #F5F5F5;
-}
+      .flying {
+        background-color: #a890f0;
+      }
 
-       .fighting {
-  background-color: #E6E0D4;
-}
+      .fighting {
+        background-color: #903028;
+      }
 
-       .ghost {
-  background-color: #ebc2c2;
-}
+      .ghost {
+        background-color: #705898;
+      }
 
-       .normal {
-  background-color: #F5F5F5;
-}
+      .normal {
+        background-color: #a8a878;
+      }
 
-
-</style>
+      .dark {
+        background-color: #705848;
+      }
+    </style>
   </head>
   <body>
     <!-- Barra de Navegação -->
@@ -159,7 +167,13 @@
       <div class="row" id="pokemon-list">
         <!-- A lista de Pokémons será exibida aqui -->
       </div>
-
+      <!-- Botão "Ver Mais" -->
+      <button
+        id="loadMoreButton"
+        class="btn btn-primary btn-sm mt-3 mx-auto d-block"
+      >
+        Ver Mais
+      </button>
       <!-- Detalhes do Pokémon -->
       <div
         class="modal fade"
@@ -196,77 +210,56 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Fetch para obter a lista de Pokémons
-        fetch("https://pokeapi.co/api/v2/pokemon?limit=1080")
-          .then((response) => response.json())
-          .then((data) => {
-            const pokemonList = document.getElementById("pokemon-list");
+  const pokemonList = document.getElementById("pokemon-list");
+  let offset = 0;
+  const limit = 20;
 
-            data.results.forEach(async (pokemon) => {
-              const card = document.createElement("div");
-              card.className = "col-md-3 mb-4";
+  // Função para carregar os Pokémon
+  function loadPokemon() {
+    // Fetch para obter a lista de Pokémon com base no offset e limit
+    fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const pokemonData = data.results;
 
-              const pokemonNumber = pokemon.url.split("/")[6]; // Obtém o número do Pokémon a partir da URL
-              const formattedNumber = String(pokemonNumber).padStart(3, "0"); // Formata para ter três dígitos (preenchendo com zeros à esquerda, se necessário)
-              const pokemonType = await fetch(pokemon.url).then(response => response.json()).then(pokemon => pokemon.types[0].type.name);
+        pokemonData.forEach(async (pokemon) => {
+          const card = document.createElement("div");
+          card.className = "col-md-3 mb-4 card-background"; // Adiciona a classe card-background
 
-              card.innerHTML = `
-                            <div class="card ${pokemonType}">
-                                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNumber}.png" class="card-img-top" alt="${pokemon.name}">
-                                <div class="card-body">
-                                    <h5 class="card-title">#${formattedNumber} - ${pokemon.name}</h5>
-                                    <a href="pokemon-details.html?url=${pokemon.url}" class="btn btn-primary">Ver Detalhes</a>
-                                </div>
+          const pokemonNumber = pokemon.url.split("/")[6]; // Obtém o número do Pokémon a partir da URL
+          const formattedNumber = String(pokemonNumber).padStart(3, "0"); // Formata para ter três dígitos (preenchendo com zeros à esquerda, se necessário)
+          const pokemonType = await fetch(pokemon.url)
+            .then((response) => response.json())
+            .then((pokemon) => pokemon.types[0].type.name);
+
+          card.innerHTML = `
+                        <div class="card ${pokemonType}">
+                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNumber}.png" class="card-img-top" alt="${pokemon.name}">
+                            <div class="card-body">
+                                <h5 class="card-title">#${formattedNumber} - ${pokemon.name}</h5>
+                                <a href="pokemon-details.html?url=${pokemon.url}" class="btn btn-primary">Ver Detalhes</a>
                             </div>
-                        `;
-
-              pokemonList.appendChild(card);
-            });
-
-            // Adicionar evento de clique para exibir detalhes do Pokémon
-            document.querySelectorAll(".btn-primary").forEach((btn) => {
-              btn.addEventListener("click", function () {
-                const pokemonUrl = this.getAttribute("href");
-                showPokemonDetails(pokemonUrl);
-              });
-            });
-          });
-      });
-
-      // Função para mostrar detalhes do Pokémon
-      function showPokemonDetails(url) {
-        fetch(url)
-          .then((response) => response.json())
-          .then((pokemon) => {
-            const pokemonDetailsModal = document.getElementById(
-              "pokemonDetailsModalLabel"
-            );
-            const pokemonDetails = document.getElementById("pokemon-details");
-
-            pokemonDetailsModal.textContent = `Detalhes do Pokémon - ${pokemon.name}`;
-            pokemonDetails.innerHTML = `
-                        <p><strong>Número:</strong> ${pokemon.id}</p>
-                        <p><strong>Tipo:</strong> ${pokemon.types
-                          .map((type) => type.type.name)
-                          .join(", ")}</p>
-                        <p><strong>Habilidades:</strong> ${pokemon.abilities
-                          .map((ability) => ability.ability.name)
-                          .join(", ")}</p>
-                        <p><strong>Estatísticas:</strong></p>
-                        <ul>
-                            ${pokemon.stats
-                              .map(
-                                (stat) =>
-                                  `<li><strong>${stat.stat.name}:</strong> ${stat.base_stat}</li>`
-                              )
-                              .join("")}
-                        </ul>
+                        </div>
                     `;
 
-            // Exibe o modal de detalhes
-            $("#pokemonDetailsModal").modal("show");
-          });
-      }
+          pokemonList.appendChild(card);
+        });
+
+        // Incrementa o offset para a próxima carga
+        offset += limit;
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar mais Pokémon:", error);
+      });
+  }
+
+  // Inicializa a carga dos primeiros Pokémon
+  loadPokemon();
+
+  // Adiciona um evento de clique ao botão "Ver Mais"
+  document.getElementById("loadMoreButton").addEventListener("click", loadPokemon);
+});
+
     </script>
   </body>
 </html>
