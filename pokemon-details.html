@@ -64,16 +64,34 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Obter o parâmetro 'url' da URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const pokemonUrl = urlParams.get("url");
+    // Obter o parâmetro 'url' da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const pokemonUrl = urlParams.get("url");
 
-        // Função para mostrar detalhes do Pokémon
-        fetch(pokemonUrl)
+    // Função para mostrar detalhes do Pokémon
+    fetch(pokemonUrl)
+      .then((response) => response.json())
+      .then((pokemon) => {
+        const pokemonDetailsContainer = document.getElementById("pokemon-details");
+
+        // Obtém as versões da espécie do Pokémon
+        const speciesUrl = pokemon.species.url;
+        fetch(speciesUrl)
           .then((response) => response.json())
-          .then((pokemon) => {
-            const pokemonDetailsContainer =
-              document.getElementById("pokemon-details");
+          .then((species) => {
+            const regionText = species.generation.name
+              ? `<p><strong>Geração:</strong> ${species.generation.name}</p>`
+              : "";
+
+            // Obtém a descrição do Pokémon
+            const flavorTextEntries = species.flavor_text_entries;
+            const description = flavorTextEntries.find(
+              (entry) => entry.language.name === "en"
+            );
+
+            const descriptionText = description
+              ? `<p><strong>Descrição:</strong> ${description.flavor_text}</p>`
+              : "";
 
             // Obtém as fraquezas do Pokémon
             const weaknessesPromises = pokemon.types.map((type) => {
@@ -99,77 +117,62 @@
 
                 const weaknessesText =
                   uniqueWeaknesses.length > 0
-                    ? `<p><strong>Fraquezas:</strong> ${uniqueWeaknesses.join(
-                        ", "
-                      )}</p>`
+                    ? `<p><strong>Fraquezas:</strong> ${uniqueWeaknesses.join(", ")}</p>`
                     : "";
 
                 pokemonDetailsContainer.innerHTML = `
-              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-                pokemon.id
-              }.png" class="img-fluid" alt="${pokemon.name}">
-              <div class="pokemon-info">
-                  <h5 class="card-title">Detalhes do Pokémon - ${
-                    pokemon.name
-                  }</h5>
-                  <p><strong>Número:</strong> ${pokemon.id}</p>
-                  <p><strong>Tipo:</strong> ${pokemon.types
-                    .map((type) => type.type.name)
-                    .join(", ")}</p>
-                  <p><strong>Habilidades:</strong> ${pokemon.abilities
-                    .map((ability) => ability.ability.name)
-                    .join(", ")}</p>
-                  <p><strong>Estatísticas:</strong></p>
-                  <ul>
-                      ${pokemon.stats
-                        .map(
-                          (stat) =>
-                            `<li><strong>${stat.stat.name}:</strong> ${stat.base_stat}</li>`
-                        )
-                        .join("")}
-                  </ul>
-                  ${weaknessesText}
-              </div>
-            `;
+                  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+                    pokemon.id
+                  }.png" class="img-fluid" alt="${pokemon.name}">
+                  <div class="pokemon-info">
+                    <h5 class="card-title">Detalhes do Pokémon - ${pokemon.name}</h5>
+                    <p><strong>Número:</strong> ${pokemon.id}</p>
+                    ${regionText}
+                    ${descriptionText}
+                    <p><strong>Tipo:</strong> ${pokemon.types.map((type) => type.type.name).join(", ")}</p>
+                    <p><strong>Habilidades:</strong> ${pokemon.abilities.map((ability) => ability.ability.name).join(", ")}</p>
+                    <p><strong>Estatísticas:</strong></p>
+                    <ul>
+                      ${pokemon.stats.map(
+                        (stat) => `<li><strong>${stat.stat.name}:</strong> ${stat.base_stat}</li>`
+                      ).join("")}
+                    </ul>
+                    ${weaknessesText}
+                  </div>
+                `;
               })
               .catch((error) => {
                 console.error("Erro ao obter fraquezas:", error);
               });
           })
           .catch((error) => {
-            console.error("Erro ao obter detalhes do Pokémon:", error);
+            console.error("Erro ao obter espécie do Pokémon:", error);
           });
+      })
+      .catch((error) => {
+        console.error("Erro ao obter detalhes do Pokémon:", error);
       });
+  });
 
-      // Função para pesquisar Pokémon
-      function searchPokemon() {
-        const searchInput = document
-          .getElementById("searchInput")
-          .value.toLowerCase();
+  // Função para pesquisar Pokémon
+  function searchPokemon() {
+    const searchInput = document.getElementById("searchInput").value.toLowerCase();
 
-        // Obtem todos os cards de Pokémon
-        const pokemonCards = document.querySelectorAll(".card");
+    // Obtem todos os cards de Pokémon
+    const pokemonCards = document.querySelectorAll(".card");
 
-        // Percorre os cards para ocultar/mostrar com base na pesquisa
-        pokemonCards.forEach((card) => {
-          const pokemonName = card
-            .querySelector(".card-title")
-            .textContent.toLowerCase();
-          const pokemonNumber = card
-            .querySelector(".card-title")
-            .textContent.split(" - ")[0]
-            .slice(1);
+    // Percorre os cards para ocultar/mostrar com base na pesquisa
+    pokemonCards.forEach((card) => {
+      const pokemonName = card.querySelector(".card-title").textContent.toLowerCase();
+      const pokemonNumber = card.querySelector(".card-title").textContent.split(" - ")[0].slice(1);
 
-          if (
-            pokemonName.includes(searchInput) ||
-            pokemonNumber.includes(searchInput)
-          ) {
-            card.style.display = "block";
-          } else {
-            card.style.display = "none";
-          }
-        });
+      if (pokemonName.includes(searchInput) || pokemonNumber.includes(searchInput)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
       }
+    });
+  }
     </script>
   </body>
 </html>
