@@ -2,67 +2,64 @@
 
 /* Estilos para a barra de navegação */
 .navbar-brand img {
-    width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
-    height: 80px;
-    margin-right: 10px;
+  width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
+  height: 80px;
+  margin-right: 10px;
 }
 
 .navbar-brand img.logo {
-    width: 100px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
-    height: auto;
+  width: 100px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
+  height: auto;
 }
 
 /* Estilos para a barra de pesquisa */
 .search-bar {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .search-input {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 /* Estilos para a página de detalhes do Pokémon */
 #pokemon-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 800px;
-    margin: 0 auto;
-    margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
 #pokemon-details img {
-    max-width: 60%;
-    height: auto;
-    
+  max-width: 60%;
+  height: auto;
 }
 
 #pokemon-details .pokemon-info {
-    max-width: 50%;
+  max-width: 50%;
 }
 
 #pokemon-details ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 #pokemon-details ul li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
-
-/* Estilos para o botão "Voltar ao Topo" */
 #scrollTopButton {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 99;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  #scrollTopButton img {
-    width: 90px; /* Ajuste o tamanho conforme necessário */
-    height: auto;
-  }
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+#scrollTopButton img {
+  width: 90px;
+  height: auto;
+}
