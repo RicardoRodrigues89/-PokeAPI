@@ -15,28 +15,23 @@
     />
     <!-- Seu CSS personalizado pode ser adicionado aqui -->
     <style>
+      body {
+        background-image: url("./imagens/d0559662c49b354f89770b376c213e00.gif");
+        background-size: cover; /* Ajusta o tamanho para cobrir toda a tela */
+        background-attachment: fixed;
+        background-repeat: no-repeat; /* Impede a repetição do GIF */
+      }
       /* Adicione estilos personalizados aqui */
       .card {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 1); /* Sombra nos cards */
         transition: box-shadow 0.3s ease; /* Transição suave para a sombra */
-
-        /* Adicione os estilos específicos para o efeito hover */
       }
-      .card-background {
-        background-color: red;
-        background-position: center;
-        border-radius: 2%;
-      }
-
       .card:hover {
         box-shadow: 0 8px 16px rgba(0, 0, 0, 1); /* Aumenta a sombra ao passar o mouse */
         transform: scale(
           1.05
         ); /* Aumenta ligeiramente o tamanho ao passar o mouse */
       }
-
-      /* ... Seu CSS existente ... */
-
       .steel {
         background-color: #b8b8d0;
       }
@@ -118,7 +113,10 @@
     <!-- Barra de Navegação -->
     <nav class="navbar navbar-expand-lg navbar-light bg-danger">
       <a class="navbar-brand" href="#">
-        <img src="./imagens/pokeball.png.png" alt="Pokeball" />
+        <img
+          src="./imagens/pokedex_kanto_by_thekevmeister_dcis2l3-fullview-removebg-preview.png"
+          alt="Pokeball"
+        />
         <img
           src="./imagens/download-removebg-preview.png.png"
           alt="Pokédex Logo"
@@ -212,7 +210,7 @@
       class="btn btn-secondary btn-sm"
       onclick="scrollToTop()"
     >
-      <img src="./imagens/017-removebg-preview.png" alt="Pokémon" />
+      <img src="./imagens/giphy.gif" alt="Pokémon" />
     </button>
     <!-- Bootstrap JS e dependências -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -298,57 +296,66 @@
         });
       }
 
-// Função para pesquisar Pokémon pelo nome ou número
-function searchPokemon() {
-  const searchInput = document.getElementById("searchInput").value.toLowerCase();
-  const notFoundMessage = document.getElementById("notFoundMessage");
-  const pokemonList = document.getElementById("pokemon-list");
+      // Função para pesquisar Pokémon pelo nome ou número
+      function searchPokemon() {
+        const searchInput = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const notFoundMessage = document.getElementById("notFoundMessage");
+        const pokemonList = document.getElementById("pokemon-list");
 
-  // Oculta a mensagem de "Pokémon não encontrado" e limpa a lista de Pokémon
-  notFoundMessage.style.display = "none";
-  pokemonList.innerHTML = "";
+        // Oculta a mensagem de "Pokémon não encontrado" e limpa a lista de Pokémon
+        notFoundMessage.style.display = "none";
+        pokemonList.innerHTML = "";
 
-  // Fetch para obter o Pokémon pelo nome ou número
-  fetch(`https://pokeapi.co/api/v2/pokemon/${searchInput}`)
-    .then((response) => {
-      if (!response.ok) {
-        // Se não encontrar o Pokémon, exibe a mensagem
-        notFoundMessage.style.display = "block";
-        throw new Error("Pokémon não encontrado");
+        // Fetch para obter o Pokémon pelo nome ou número
+        fetch(`https://pokeapi.co/api/v2/pokemon/${searchInput}`)
+          .then((response) => {
+            if (!response.ok) {
+              // Se não encontrar o Pokémon, exibe a mensagem
+              notFoundMessage.style.display = "block";
+              throw new Error("Pokémon não encontrado");
+            }
+            return response.json();
+          })
+          .then((pokemon) => {
+            // Exibe o Pokémon encontrado centralizado na tela
+            const card = document.createElement("div");
+            card.className = "col-md-3 mb-4 card-background"; // Adiciona a classe card-background
+
+            const formattedNumber = String(pokemon.id).padStart(3, "0"); // Formata para ter três dígitos (preenchendo com zeros à esquerda, se necessário)
+            const pokemonType = pokemon.types[0].type.name;
+
+            card.innerHTML = `
+          <div class="card ${pokemonType}">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" class="card-img-top" alt="${pokemon.name}">
+              <div class="card-body">
+                  <h5 class="card-title">#${formattedNumber} - ${pokemon.name}</h5>
+                  <!-- Atualizei a classe do botão para facilitar a identificação -->
+                  <button class="btn btn-primary openPokedexButton" data-url="${pokemon.url}">Abrir Pokedex</button>
+              </div>
+          </div>
+        `;
+
+            pokemonList.appendChild(card);
+          })
+          .catch((error) => {
+            console.error("Erro ao pesquisar Pokémon:", error);
+          });
       }
-      return response.json();
-    })
-    .then((pokemon) => {
-      // Exibe o Pokémon encontrado centralizado na tela
-      const card = document.createElement("div");
-      card.className = "col-md-3 mb-4 card-background"; // Adiciona a classe card-background
 
-      const formattedNumber = String(pokemon.id).padStart(3, "0"); // Formata para ter três dígitos (preenchendo com zeros à esquerda, se necessário)
-      const pokemonType = pokemon.types[0].type.name;
+      // Adiciona um ouvinte de evento ao contêiner pokemon-list para lidar com cliques nos botões
+      document
+        .getElementById("pokemon-list")
+        .addEventListener("click", function (event) {
+          if (event.target.classList.contains("openPokedexButton")) {
+            // Obtém a URL do Pokémon associada ao botão clicado
+            const pokemonUrl = event.target.dataset.url;
 
-      card.innerHTML = `
-        <div class="card ${pokemonType}">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" class="card-img-top" alt="${pokemon.name}">
-            <div class="card-body">
-                <h5 class="card-title">#${formattedNumber} - ${pokemon.name}</h5>
-                <button class="btn btn-primary" id="openPokedexButton">Abrir Pokedex</button>
-            </div>
-        </div>
-      `;
-
-      pokemonList.appendChild(card);
-
-      // Adiciona um evento de clique ao botão após ele ser criado
-      const openPokedexButton = document.getElementById("openPokedexButton");
-      openPokedexButton.addEventListener("click", function () {
-        window.location.href = `pokemon-details.html?id=${pokemon.id}`;
-      });
-    })
-    .catch((error) => {
-      console.error("Erro ao pesquisar Pokémon:", error);
-    });
-}
-
+            // Redireciona para a página de detalhes com a URL do Pokémon
+            window.location.href = `pokemon-details.html?url=${pokemonUrl}`;
+          }
+        });
     </script>
   </body>
 </html>
