@@ -15,28 +15,23 @@
     />
     <!-- Seu CSS personalizado pode ser adicionado aqui -->
     <style>
+      body {
+        background-image: url("./imagens/d0559662c49b354f89770b376c213e00.gif");
+        background-size: cover; /* Ajusta o tamanho para cobrir toda a tela */
+        background-attachment: fixed;
+        background-repeat: no-repeat; /* Impede a repetição do GIF */
+      }
       /* Adicione estilos personalizados aqui */
       .card {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 1); /* Sombra nos cards */
         transition: box-shadow 0.3s ease; /* Transição suave para a sombra */
-        border-color: black;
-        /* Adicione os estilos específicos para o efeito hover */
       }
-      .card-background {
-        background-color: red;
-        background-position: center;
-        border-radius: 2%;
-      }
-
       .card:hover {
         box-shadow: 0 8px 16px rgba(0, 0, 0, 1); /* Aumenta a sombra ao passar o mouse */
         transform: scale(
           1.05
         ); /* Aumenta ligeiramente o tamanho ao passar o mouse */
       }
-
-      /* ... Seu CSS existente ... */
-
       .steel {
         background-color: #b8b8d0;
       }
@@ -114,7 +109,6 @@
       }
     </style>
   </head>
-
   <body>
     <!-- Barra de Navegação -->
     <nav class="navbar navbar-expand-lg navbar-light bg-danger">
@@ -216,7 +210,7 @@
       class="btn btn-secondary btn-sm"
       onclick="scrollToTop()"
     >
-      <img src="./imagens/017-removebg-preview.png" alt="Pokémon" />
+      <img src="./imagens/giphyy.gif" alt="Pokémon" />
     </button>
     <!-- Bootstrap JS e dependências -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -333,28 +327,35 @@
             const pokemonType = pokemon.types[0].type.name;
 
             card.innerHTML = `
-        <div class="card ${pokemonType}">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" class="card-img-top" alt="${pokemon.name}">
-            <div class="card-body">
-                <h5 class="card-title">#${formattedNumber} - ${pokemon.name}</h5>
-                <button class="btn btn-primary" id="openPokedexButton">Abrir Pokedex</button>
-            </div>
-        </div>
-      `;
+          <div class="card ${pokemonType}">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" class="card-img-top" alt="${pokemon.name}">
+              <div class="card-body">
+                  <h5 class="card-title">#${formattedNumber} - ${pokemon.name}</h5>
+                  <!-- Atualizei a classe do botão para facilitar a identificação -->
+                  <button class="btn btn-primary openPokedexButton" data-url="${pokemon.url}">Abrir Pokedex</button>
+              </div>
+          </div>
+        `;
 
             pokemonList.appendChild(card);
-
-            // Adiciona um evento de clique ao botão após ele ser criado
-            const openPokedexButton =
-              document.getElementById("openPokedexButton");
-            openPokedexButton.addEventListener("click", function () {
-              window.location.href = `pokemon-details.html?id=${pokemon.id}`;
-            });
           })
           .catch((error) => {
             console.error("Erro ao pesquisar Pokémon:", error);
           });
       }
+
+      // Adiciona um ouvinte de evento ao contêiner pokemon-list para lidar com cliques nos botões
+      document
+        .getElementById("pokemon-list")
+        .addEventListener("click", function (event) {
+          if (event.target.classList.contains("openPokedexButton")) {
+            // Obtém a URL do Pokémon associada ao botão clicado
+            const pokemonUrl = event.target.dataset.url;
+
+            // Redireciona para a página de detalhes com a URL do Pokémon
+            window.location.href = `pokemon-details.html?url=${pokemonUrl}`;
+          }
+        });
     </script>
   </body>
 </html>

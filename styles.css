@@ -35,6 +35,7 @@
 #pokemon-details img {
   max-width: 60%;
   height: auto;
+  
 }
 
 #pokemon-details .pokemon-info {
@@ -49,6 +50,8 @@
 #pokemon-details ul li {
   margin-bottom: 10px;
 }
+
+/* Estilos para o botão "Voltar ao Topo" */
 #scrollTopButton {
   display: none;
   position: fixed;
@@ -60,6 +63,6 @@
   cursor: pointer;
 }
 #scrollTopButton img {
-  width: 90px;
+  width: 100px; /* Ajuste o tamanho conforme necessário */
   height: auto;
 }
