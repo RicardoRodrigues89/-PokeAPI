@@ -1,0 +1,58 @@
+body {
+    background: linear-gradient(to bottom, #6ab7f5, #fff);
+    min-height: 100vh;
+
+    
+  }
+  .navbar-brand img {
+    width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
+    height: 80px;
+    margin-right: 10px;
+  }
+  
+  .navbar-brand img.logo {
+    width: 100px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
+    height: auto;
+  }
+  .navbar-brand img.galera {
+    width: 200px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
+    height: auto;
+  }
+  /* Estilos para a barra de pesquisa */
+  .search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-input {
+    flex-grow: 1;
+  }
+  
+  /* Estilos para a página de detalhes do Pokémon */
+  #pokemon-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+  
+  #pokemon-details img {
+    max-width: 60%;
+    height: auto;
+    
+  }
+  
+  #pokemon-details .pokemon-info {
+    max-width: 50%;
+  }
+  
+  #pokemon-details ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  #pokemon-details ul li {
+    margin-bottom: 10px;
+  }
