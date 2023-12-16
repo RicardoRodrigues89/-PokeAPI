@@ -2,9 +2,9 @@ body {
     background: linear-gradient(to bottom, #6ab7f5, #fff);
     min-height: 100vh;
 
-    
-  }
-  .navbar-brand img {
+    }
+  
+    .navbar-brand img {
     width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
     height: 80px;
     margin-right: 10px;
