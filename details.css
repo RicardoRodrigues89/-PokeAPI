@@ -3,6 +3,23 @@ body {
     min-height: 100vh;
 
     }
+
+    .img-pokedex{
+      position: absolute;
+      width: 10%;
+    }
+
+
+    .custom-img {
+      
+      width: 20%; /* Ajuste conforme necessário */
+      max-width: 100%; /* Garante que a imagem não ultrapasse 100% da largura do contêiner */
+      height: 20%; /* Mantém a proporção da imagem */
+      position: relative; /* Torna possível utilizar as propriedades top e left */
+      top: 100%; /* Move a imagem 50% para baixo do topo do seu contêiner pai */
+      left: 10%; /* Move a imagem 50% para a direita do lado esquerdo do seu contêiner pai */
+      transform: translate(-100%, 280%); /* Centraliza a imagem usando transformação */
+  }
   
     .navbar-brand img {
     width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
