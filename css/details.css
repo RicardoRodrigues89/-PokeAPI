@@ -3,10 +3,24 @@ body {
   min-height: 100vh;
   background-image: url(/imagens/ddwvp73-e9a77a9e-cb0a-44bd-938a-0bd294009913.png);
   background-repeat: no-repeat;
-  background-position: 100px;
+  background-position: center 20%;
   background-size: 60%;
-  height: 70vh;
  
+}
+
+/* Estilos para tablets e dispositivos com largura de tela de até 768 pixels */
+@media (max-width: 768px) {
+  body {
+    background-size: 100%; /* Ajuste o tamanho conforme necessário para telas menores */
+  }
+}
+
+/* Estilos para celulares e dispositivos com largura de tela de até 480 pixels */
+@media (max-width: 480px) {
+  body {
+    background-size: 100%; /* Ajuste o tamanho conforme necessário para telas menores */
+  }
+  /* Adicione estilos específicos para celulares aqui */
 }
 
 .navbar-brand img {
