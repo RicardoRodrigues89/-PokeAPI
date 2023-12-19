@@ -1,9 +1,14 @@
 body {
   background: linear-gradient(to bottom, #6ab7f5, #fff);
   min-height: 100vh;
-
-  
+  background-image: url(/imagens/ddwvp73-e9a77a9e-cb0a-44bd-938a-0bd294009913.png);
+  background-repeat: no-repeat;
+  background-position: 100px;
+  background-size: 60%;
+  height: 70vh;
+ 
 }
+
 .navbar-brand img {
     width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
     height: 80px;
