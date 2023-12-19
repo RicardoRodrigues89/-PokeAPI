@@ -15,30 +15,22 @@
   width: 200px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
   height: auto;
 }
-/* Estilos para a barra de pesquisa */
-.search-bar {
-  display: flex;
-  align-items: center;
-}
-
-.search-input {
-  flex-grow: 1;
-}
 body {
-  background-image: url("./imagens/d0559662c49b354f89770b376c213e00.gif");
+  background-image: url("../imagens/d0559662c49b354f89770b376c213e00.gif");
   background-size: cover; 
   background-attachment: fixed;
   background-repeat: no-repeat; 
 }
 .card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 2); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 2.2); 
   transition: box-shadow 0.3s ease; 
+  border: 4px double #fff;
+  border-radius: 10px;
+  overflow: hidden;
 }
 .card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 2); 
-  transform: scale(
-    1.05
-  ); 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 2.2);
+  transform: scale(1.05);
 }
 .steel {
   background-color: #b8b8d0;
@@ -115,6 +107,17 @@ body {
 .dark {
   background-color: #705848;
 }
+/* Estilos para a barra de pesquisa */
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  flex-grow: 1;
+}
+
+
 
 /* Estilos para o botão "Voltar ao Topo" */
 #scrollTopButton {
