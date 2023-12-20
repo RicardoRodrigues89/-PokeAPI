@@ -1,24 +1,25 @@
 body {
   background: linear-gradient(to bottom, #6ab7f5, #fff);
   min-height: 100vh;
-  background-image: url(/imagens/ddwvp73-e9a77a9e-cb0a-44bd-938a-0bd294009913.png);
+  background-image: url(/imagens/background-pokemon.png);
   background-repeat: no-repeat;
-  background-position: center 20%;
-  background-size: 60%;
- 
+  background-position: center 100%;
+  
 }
 
 /* Estilos para tablets e dispositivos com largura de tela de até 768 pixels */
 @media (max-width: 768px) {
   body {
-    background-size: 100%; /* Ajuste o tamanho conforme necessário para telas menores */
+    flex-direction: column;
+    gap: 2vh
   }
 }
 
 /* Estilos para celulares e dispositivos com largura de tela de até 480 pixels */
 @media (max-width: 480px) {
   body {
-    background-size: 100%; /* Ajuste o tamanho conforme necessário para telas menores */
+    flex-direction: column;
+    gap: 2vh;
   }
   /* Adicione estilos específicos para celulares aqui */
 }
@@ -55,8 +56,20 @@ body {
   
   #pokemon-details .pokemon-info {
     max-width: 50%;
+    
   }
-  
+  .pokemon-info h5{
+    
+  }
+
+  .pokemon-info p{
+    color: midnightblue;
+  }
+
+  .pokemon-info p strong{
+    color: #0a58ca;
+  }
+
   #pokemon-details ul {
     list-style: none;
     padding: 0;
@@ -67,7 +80,7 @@ body {
   }
 
    /* Adicione uma animação fadeIn */
-   .pokemon-info {
+.pokemon-info {
     animation: fadeIn 1s ease-in-out;
 }
 
