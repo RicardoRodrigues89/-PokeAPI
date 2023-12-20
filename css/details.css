@@ -4,6 +4,7 @@ body {
   background-image: url(/imagens/background-pokemon.png);
   background-repeat: no-repeat;
   background-position: center 100%;
+  background: opacity;
 }
 
 /* Estilos para tablets e dispositivos com largura de tela de até 768 pixels */
@@ -56,7 +57,7 @@ body {
 
 #pokemon-details .pokemon-info {
   max-width: 50%;
-  background: transparent;
+  background: rgba(252, 252, 252, 0.4);;
   backdrop-filter: blur(2px);
   border: 2px solid rgba(255, 255, 255, .2);
   border-radius: 30px;
@@ -66,6 +67,11 @@ body {
 
 .pokemon-info p {
   color: midnightblue;
+}
+
+.pokemon-info li {
+  color: darkblue;
+  font-family: "arial";
 }
 
 .pokemon-info p strong {
