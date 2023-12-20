@@ -4,14 +4,13 @@ body {
   background-image: url(/imagens/background-pokemon.png);
   background-repeat: no-repeat;
   background-position: center 100%;
-  
 }
 
 /* Estilos para tablets e dispositivos com largura de tela de até 768 pixels */
 @media (max-width: 768px) {
   body {
     flex-direction: column;
-    gap: 2vh
+    gap: 2vh;
   }
 }
 
@@ -25,84 +24,114 @@ body {
 }
 
 .navbar-brand img {
-    width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
-    height: 80px;
-    margin-right: 10px;
-  }
-  
-  .navbar-brand img.logo {
-    width: 100px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
-    height: auto;
-  }
-  .navbar-brand img.galera {
-    width: 200px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
-    height: auto;
-  }
-  /* Estilos para a página de detalhes do Pokémon */
-#pokemon-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1000px;
-    margin: 0 auto;
-    margin-top: 100px;
-  }
-  
-  #pokemon-details img {
-    max-width: 60%;
-    height: auto;
-    
-  }
-  
-  #pokemon-details .pokemon-info {
-    max-width: 50%;
-    
-  }
-  .pokemon-info h5{
-    
-  }
-
-  .pokemon-info p{
-    color: midnightblue;
-  }
-
-  .pokemon-info p strong{
-    color: #0a58ca;
-  }
-
-  #pokemon-details ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  #pokemon-details ul li {
-    margin-bottom: 10px;
-  }
-
-   /* Adicione uma animação fadeIn */
-.pokemon-info {
-    animation: fadeIn 1s ease-in-out;
+  width: 80px; /* Ajuste o tamanho da imagem da Pokébola conforme necessário */
+  height: 80px;
+  margin-right: 10px;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.navbar-brand img.logo {
+  width: 100px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
+  height: auto;
+}
+
+.navbar-brand img.galera {
+  width: 200px; /* Ajuste o tamanho da imagem da Pokédex conforme necessário */
+  height: auto;
+}
+
+/* Estilos para a página de detalhes do Pokémon */
+#pokemon-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+#pokemon-details img {
+  max-width: 60%;
+  height: auto;
+}
+
+#pokemon-details .pokemon-info {
+  max-width: 50%;
+  background: transparent;
+  backdrop-filter: blur(2px);
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 1);
+}
+
+.pokemon-info p {
+  color: midnightblue;
+}
+
+.pokemon-info p strong {
+  color: #0a58ca;
+}
+
+#pokemon-details ul {
+  list-style: none;
+  padding: 0;
+}
+
+#pokemon-details ul li {
+  margin-bottom: 10px;
+}
+
+/* Adicione uma animação fadeIn */
+.pokemon-info {
+  animation: fadeIn 1s ease-in-out;
 }
 
 .animated {
   animation: zoomInOut 1.5s infinite alternate;
 }
 
-@keyframes zoomInOut {
-  0% {
-      transform: scale(1);
+/* Botões de Navegação */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+/* Adiciona as classes do Bootstrap para a cor clássica dos botões */
+#prevButton,
+#nextButton {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+  width: 120px;
+}
+
+/* Adiciona uma animação fadeIn */
+.button-container,
+.pokemon-info {
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Adiciona uma animação zoomInOut */
+.animated {
+  animation: zoomInOut 1.5s infinite alternate;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  100% {
-      transform: scale(1.1);
+  to {
+    opacity: 1;
   }
 }
 
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}

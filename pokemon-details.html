@@ -1,160 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>Detalhes do Pokémon</title>
     <link rel="stylesheet" href="./css/details.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js"></script>
-</head>
-<body>
+  </head>
+
+  <body>
     <!-- Barra de Navegação -->
     <nav class="navbar navbar-expand-lg navbar-light bg-danger">
-        <a class="navbar-brand" href="./index.html">
-            <img src="./imagens/pokedex_kanto_by_thekevmeister_dcis2l3-fullview-removebg-preview.png" alt="Pokeball" />
-            <img src="./imagens/giphy.gif" alt="Pokédex Logo" class="galera" />
-        </a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <!-- Adicione aqui os links do menu, se necessário -->
-        </div>
+      <a class="navbar-brand" href="./index.html">
+        <img
+          src="./imagens/pokedex_kanto_by_thekevmeister_dcis2l3-fullview-removebg-preview.png"
+          alt="Pokeball"
+        />
+        <img src="./imagens/giphy.gif" alt="Pokédex Logo" class="galera" />
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Adicione aqui os links do menu, se necessário -->
+      </div>
     </nav>
 
     <div class="container mt-5">
-        <!-- Detalhes do Pokémon -->
-        <div id="pokemon-details" class="text-center">
-            <!-- As informações do Pokémon serão exibidas aqui -->
-        </div>
-        <!-- Botões de Navegação -->
-        <div class="mt-3">
-            <button id="prevButton" class="btn btn-primary">Anterior</button>
-            <button id="nextButton" class="btn btn-primary">Próximo</button>
-        </div>
+      <!-- Detalhes do Pokémon -->
+      <div id="pokemon-details" class="text-center">
+        <!-- As informações do Pokémon serão exibidas aqui -->
+      </div>
+      <!-- Botões de Navegação -->
+      <div class="button-container">
+        <button id="prevButton" class="btn btn-light">&#8249; Anterior</button>
+        <button id="nextButton" class="btn btn-light">Próximo &#8250;</button>
+      </div>
     </div>
 
     <!-- Bootstrap JS e dependências -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Obter o parâmetro 'url' da URL
-            const urlParams = new URLSearchParams(window.location.search);
-            let pokemonIndex = parseInt(urlParams.get("url").split("/").slice(-2, -1)[0]);
+      document.addEventListener("DOMContentLoaded", function () {
+        // Obter o parâmetro 'url' da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        let pokemonIndex = parseInt(
+          urlParams.get("url").split("/").slice(-2, -1)[0]
+        );
 
-            // Função para mostrar detalhes do Pokémon
-            function showPokemonDetails() {
-                const pokemonDetailsContainer = document.getElementById("pokemon-details");
+        // Função para mostrar detalhes do Pokémon
+        function showPokemonDetails() {
+          const pokemonDetailsContainer =
+            document.getElementById("pokemon-details");
 
-                fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`)
-                    .then((response) => response.json())
-                    .then((pokemon) => {
-                        const formattedNumber = String(pokemon.id).padStart(3, "0");
+          fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`)
+            .then((response) => response.json())
+            .then((pokemon) => {
+              const formattedNumber = String(pokemon.id).padStart(3, "0");
 
-                        // Obtém as versões da espécie do Pokémon
-                        fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}/`)
-                            .then((response) => response.json())
-                            .then((species) => {
-                                const regionText = species.generation.name
-                                    ? `<p><strong>Geração:</strong> ${species.generation.name}</p>`
-                                    : "";
+              // Obtém as versões da espécie do Pokémon
+              fetch(
+                `https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}/`
+              )
+                .then((response) => response.json())
+                .then((species) => {
+                  const regionText = species.generation.name
+                    ? `<p><strong>Geração:</strong> ${species.generation.name}</p>`
+                    : "";
 
-                                // Obtém a descrição do Pokémon
-                                const flavorTextEntries = species.flavor_text_entries;
-                                const description = flavorTextEntries.find(
-                                    (entry) => entry.language.name === "en"
-                                );
+                  // Obtém a descrição do Pokémon
+                  const flavorTextEntries = species.flavor_text_entries;
+                  const description = flavorTextEntries.find(
+                    (entry) => entry.language.name === "en"
+                  );
 
-                                const descriptionText = description
-                                    ? `<p><strong>Descrição:</strong> ${description.flavor_text}</p>`
-                                    : "";
+                  const descriptionText = description
+                    ? `<p><strong>Descrição:</strong> ${description.flavor_text}</p>`
+                    : "";
 
-                                // Obtém as fraquezas do Pokémon
-                                const weaknessesPromises = pokemon.types.map((type) => {
-                                    const typeUrl = type.type.url;
-                                    return fetch(typeUrl)
-                                        .then((response) => response.json())
-                                        .then((typeDetails) =>
-                                            typeDetails.damage_relations.double_damage_from.map(
-                                                (weakness) => weakness.name
-                                            )
-                                        )
-                                        .catch((error) => {
-                                            console.error("Erro ao obter fraquezas:", error);
-                                            return [];
-                                        });
-                                });
+                  // Obtém as fraquezas do Pokémon
+                  const weaknessesPromises = pokemon.types.map((type) => {
+                    const typeUrl = type.type.url;
+                    return fetch(typeUrl)
+                      .then((response) => response.json())
+                      .then((typeDetails) =>
+                        typeDetails.damage_relations.double_damage_from.map(
+                          (weakness) => weakness.name
+                        )
+                      )
+                      .catch((error) => {
+                        console.error("Erro ao obter fraquezas:", error);
+                        return [];
+                      });
+                  });
 
-                                // Após todas as requisições estarem completas, exibe os detalhes
-                                Promise.all(weaknessesPromises)
-                                    .then((allWeaknesses) => {
-                                        // Flatten the array of weaknesses
-                                        const uniqueWeaknesses = [...new Set(allWeaknesses.flat())];
+                  // Após todas as requisições estarem completas, exibe os detalhes
+                  Promise.all(weaknessesPromises)
+                    .then((allWeaknesses) => {
+                      // Flatten the array of weaknesses
+                      const uniqueWeaknesses = [
+                        ...new Set(allWeaknesses.flat()),
+                      ];
 
-                                        const weaknessesText =
-                                            uniqueWeaknesses.length > 0
-                                                ? `<p><strong>Fraquezas:</strong> ${uniqueWeaknesses.join(
-                                                    ", "
-                                                )}</p>`
-                                                : "";
+                      const weaknessesText =
+                        uniqueWeaknesses.length > 0
+                          ? `<p><strong>Fraquezas:</strong> ${uniqueWeaknesses.join(
+                              ", "
+                            )}</p>`
+                          : "";
 
-                                        const pokemonDetails = `
+                      // URL padrão da PokeAPI para todos os Pokémon
+                      const defaultImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+
+                      // URL da imagem
+                      let imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`;
+
+                      // Verifica se o índice do Pokémon é maior que 650
+                      if (pokemon.id > 650) {
+                        imageUrl = defaultImageUrl;
+                      }
+
+                      const pokemonDetails = `
                                             <div id="pokemon-image-section" class="animated">
-                                                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg" class="img-fluid" alt="${pokemon.name}">
+                                                <img src="${imageUrl}" class="img-fluid" alt="${
+                        pokemon.name
+                      }">
                                             </div>
                                             <div class="pokemon-info">
-                                                <h5 class="card-title">Detalhes do Pokémon - ${pokemon.name}</h5>
+                                                <h5 class="card-title">Detalhes do Pokémon - ${
+                                                  pokemon.name
+                                                }</h5>
                                                 <p><strong>Número:</strong> ${formattedNumber}</p>
                                                 ${regionText}
                                                 ${descriptionText}
                                                 <p><strong>Tipo:</strong> ${pokemon.types
-                                                    .map((type) => type.type.name)
-                                                    .join(", ")}</p>
+                                                  .map((type) => type.type.name)
+                                                  .join(", ")}</p>
                                                 <p><strong>Habilidades:</strong> ${pokemon.abilities
-                                                    .map((ability) => ability.ability.name)
-                                                    .join(", ")}</p>
+                                                  .map(
+                                                    (ability) =>
+                                                      ability.ability.name
+                                                  )
+                                                  .join(", ")}</p>
                                                 <p><strong>Estatísticas:</strong></p>
                                                 <ul>
                                                     ${pokemon.stats
-                                                        .map(
-                                                            (stat) =>
-                                                                `<li><strong>${stat.stat.name}:</strong> ${stat.base_stat}</li>`
-                                                        )
-                                                        .join("")}
+                                                      .map(
+                                                        (stat) =>
+                                                          `<li><strong>${stat.stat.name}:</strong> ${stat.base_stat}</li>`
+                                                      )
+                                                      .join("")}
                                                 </ul>
                                                 ${weaknessesText}
                                             </div>
                                         `;
 
-                                        pokemonDetailsContainer.innerHTML = pokemonDetails;
-                                    })
-                                    .catch((error) => {
-                                        console.error("Erro ao obter fraquezas:", error);
-                                    });
-                            })
-                            .catch((error) => {
-                                console.error("Erro ao obter espécie do Pokémon:", error);
-                            });
+                      pokemonDetailsContainer.innerHTML = pokemonDetails;
                     })
                     .catch((error) => {
-                        console.error("Erro ao obter detalhes do Pokémon:", error);
+                      console.error("Erro ao obter fraquezas:", error);
                     });
-            }
+                })
+                .catch((error) => {
+                  console.error("Erro ao obter espécie do Pokémon:", error);
+                });
+            })
+            .catch((error) => {
+              console.error("Erro ao obter detalhes do Pokémon:", error);
+            });
+        }
 
-            // Exibir detalhes do Pokémon inicial
+        // Exibir detalhes do Pokémon inicial
+        showPokemonDetails();
+
+        // Adicionar evento de clique para o botão Anterior
+        document
+          .getElementById("prevButton")
+          .addEventListener("click", function () {
+            pokemonIndex = Math.max(pokemonIndex - 1, 1);
             showPokemonDetails();
+          });
 
-            // Adicionar evento de clique para o botão Anterior
-            document.getElementById("prevButton").addEventListener("click", function () {
-                pokemonIndex = Math.max(pokemonIndex - 1, 1);
-                showPokemonDetails();
-            });
-
-            // Adicionar evento de clique para o botão Próximo
-            document.getElementById("nextButton").addEventListener("click", function () {
-                pokemonIndex = Math.min(pokemonIndex + 1, 898); // Considerando o total de Pokémon até a geração 8
-                showPokemonDetails();
-            });
-        });
+        // Adicionar evento de clique para o botão Próximo
+        document
+          .getElementById("nextButton")
+          .addEventListener("click", function () {
+            pokemonIndex = Math.min(pokemonIndex + 1, 10063); // Ajuste o número máximo de Pokémon conforme necessário
+            showPokemonDetails();
+          });
+      });
     </script>
-</body>
+  </body>
 </html>
