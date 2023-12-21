@@ -2,6 +2,8 @@
 
 Este repositório contém o código-fonte de uma aplicação Pokédex, desenvolvida como parte de um trabalho acadêmico.
 
+![Capa](imagens/logomarca_pokedex.png)
+
 ## Entrega
 
 O trabalho deve ser entregue em um repositório Git até a data limite de 22/12/2023. 
