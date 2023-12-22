@@ -18,6 +18,8 @@ O trabalho deve ser entregue em um repositório Git até a data limite de 22/12/
 1. Clone o repositório: `git clone [(https://github.com/RicardoRodrigues89/-PokeAPI.git)]`
 2. Abra o arquivo `index.html` em um navegador web moderno.
 
+![Exec](imagens/intro_apipokedex.gif)
+
 ## Instruções Adicionais
 
 - Certifique-se de ter uma conexão com a internet para carregar as informações dos Pokémon.
